@@ -1,6 +1,6 @@
 *{
     box-sizing: border-box;
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'Dongle', sans-serif;
 }
 
 body{
@@ -19,7 +19,6 @@ body{
     width: 400px;
     border-radius: 25px;
     box-shadow: 0 0 10px rgb(151, 151, 151);
-   
 }
 
 .buttons{
@@ -36,9 +35,8 @@ button{
     border-radius: 15px;
     border: none;
     height: 70px;
-    font-size: 20px;
+    font-size: 30px;
     text-align: center;
-   
 }
 
 button:hover{
@@ -90,16 +88,17 @@ button:hover{
     color: white;
 }
 
+footer{
+    font-family: 'Dongle', sans-serif;
+    font-size: 20px;
+    bottom: 0;
+    position: absolute;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-
-/* #allClearBtn:hover{
-    box-shadow: 0 0 10px #ffc13c;
-} */
-
-/* #equalsBtn{
-    background-color: #78e9b8;
-} */
-
-/* #addBtn{
-    height: 140px;
-} */
+img{
+    height: 20px;
+}
