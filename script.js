@@ -1,19 +1,3 @@
-//TO-DO:
-//1. can do operations using simple numbers [x]
-//2. can press equals to get final numbers [x]
-    //- after pressing equals, cannot press operator numbers
-    //- pressing a number will restart operation
-        //maybe reset all variables after showing answers
-//3. can do greater-than-single digit calculations [x]
-//4. can backspace [x]
-//5. keyboard functionality [x]
-//6. show error message if attempting to divide by zero [x]
-//7. starting number should be zero [x]
-//8. add decimal pts function - change to floats [x]
-//9. prevent from adding more than one decimal [x]
-//10. add percentage button
-
-
 let storedValue = null;
 let currentValue = null;
 let operator = '';
