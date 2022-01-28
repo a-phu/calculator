@@ -8,7 +8,10 @@
 //4. can backspace [x]
 //5. keyboard functionality [x]
 //6. show error message if attempting to divide by zero [x]
-//7. add decimal pts
+//7. starting number should be zero [x]
+//8. add decimal pts function - change to floats [x]
+//9. prevent from adding more than one decimal [x]
+//10. add percentage button
 
 
 let storedValue = null;
@@ -18,6 +21,7 @@ let modifierKeys = {};
 
 const display = document.querySelector(".display #result");
 const displayOperation = document.querySelector(".display #operation");
+display.textContent = "0";
 
 const equalsBtn = document.querySelector("#equalsBtn");
 const addBtn = document.querySelector("#addBtn");
@@ -38,6 +42,8 @@ const nineBtn = document.querySelector("#nineBtn");
 
 const allClearBtn = document.querySelector("#allClearBtn");
 const backspaceBtn = document.querySelector("#backspaceBtn");
+const decimalBtn = document.querySelector("#decimalBtn");   
+const percentageBtn = document.querySelector("#percentageBtn");
 
 //NUMBER BUTTONS//
 zeroBtn.addEventListener("click", () => {
@@ -70,6 +76,9 @@ eightBtn.addEventListener("click", () => {
 nineBtn.addEventListener("click", () => {
     updateCurrentValue("9");
 });
+decimalBtn.addEventListener("click", () => {
+    addDecimal();
+})
 
 //KEYBOARD EVENTS//
 document.addEventListener('keydown', (e) => {
@@ -83,6 +92,8 @@ document.addEventListener('keydown', (e) => {
         if(currentValue !== null) updateDisplay('*');
     } else if(modifierKeys['Shift'] && keyValue === '?'){
         if(currentValue !== null) updateDisplay('/');
+    } else if(modifierKeys['Shift'] && keyValue === '%'){
+        percentage();
     }
 
     switch(keyValue){
@@ -125,6 +136,9 @@ document.addEventListener('keydown', (e) => {
         case "=":
             equals();
             break;
+        case '.':
+            addDecimal();   
+            break;
     }
 });
 
@@ -152,7 +166,7 @@ allClearBtn.addEventListener("click", () => {
     currentValue = null;
     storedValue = null;
     operator = '';
-    display.textContent = '';
+    display.textContent = '0';
     displayOperation.textContent = '';
 });
 
@@ -160,27 +174,24 @@ equalsBtn.addEventListener("click", equals);
 
 backspaceBtn.addEventListener("click", backspace);
 
+percentageBtn.addEventListener("click", percentage);
+
 function updateDisplay(newOperator){
-    //if operator blank, add new operator
     if(operator === '') operator = newOperator;
-    //if operator is '=' (from pressing the equals button), don't do anything
     if(operator === '=') return;
 
-    //dividing by zero causes error
     if(operator === '/' && currentValue === '0') {
         alert('Cannot divide by zero!');
         currentValue = null;
         return;
     }
     
-    console.log(currentValue + " " + storedValue);
     displayOperation.textContent = currentValue + " " + operator;
     storedValue = operate(storedValue, currentValue, operator);
     display.textContent = storedValue;
 
     operator = newOperator;
     displayOperation.textContent = storedValue + " " + operator;
-    console.log(currentValue + " " + storedValue);
     currentValue = null;
 }
 
@@ -188,6 +199,7 @@ function updateCurrentValue(value){
     if(operator === '='){
         return;
     } 
+
     if(currentValue === null){
         display.textContent = value;
         currentValue = value;
@@ -199,26 +211,31 @@ function updateCurrentValue(value){
 
 function operate(stored, current, operator){
     if (stored === null){
-        return parseInt(current);
+        return parseFloat(current);
     } else {
         switch(operator){
             case '+':
-                return parseInt(stored) + parseInt(current);
+                return parseFloat(stored) + parseFloat(current);
             case '-':
-                return parseInt(stored) - parseInt(current);
+                return parseFloat(stored) - parseFloat(current);
             case '*':
-                return parseInt(stored) * parseInt(current);
+                return parseFloat(stored) * parseFloat(current);
             case '/':
-                return parseInt(stored) / parseInt(current);
+                return parseFloat(stored) / parseFloat(current);
         }
     }
 }
 
 function backspace(){
+    if(operator === "=") return;
     let tempDisplay = display.textContent.split('');
     tempDisplay.pop();
     currentValue = tempDisplay.join('');
-    display.textContent = currentValue;
+    if(tempDisplay.length === 0){
+        display.textContent = 0;
+    } else {
+        display.textContent = currentValue;
+    }
 }
 
 function equals(){
@@ -235,3 +252,38 @@ function equals(){
     currentValue = null;
     operator = '=';
 }
+
+function percentage(){
+    if(operator === '='){
+        return;
+    }
+    currentValue /= 100;
+    display.textContent = currentValue;
+}
+
+function addDecimal(){
+    if(operator === '='){
+        return;
+    }
+
+    if(currentValue === null){
+        display.textContent = "0.";
+        currentValue = "0.";
+    } else{
+        let checkValue = currentValue;
+        checkValue += ".";
+        let noOfDecimalsArray = checkValue.split('').filter(noOfDecimalChecker);
+        if(noOfDecimalsArray.length > 1) {
+            return;
+        } else {
+            display.textContent += ".";
+            currentValue += ".";
+        }
+    }
+
+}
+
+function noOfDecimalChecker(value){
+    return value === '.';
+}
+

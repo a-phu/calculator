@@ -1,6 +1,6 @@
 *{
     box-sizing: border-box;
-    font-family: 'Dongle', sans-serif;
+    font-family: 'Dongle', Helvetica, sans-serif;
 }
 
 body{
@@ -52,7 +52,8 @@ button:hover{
     border-top-right-radius: 25px;
     color: white;
     margin-bottom: 20px;
-    padding-bottom: 0px;
+    /* padding-top: 50px;
+    gap: 0px; */ 
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -60,12 +61,15 @@ button:hover{
 }
 
 .display #result{
-    font-size: 50px;
-    margin: 10px 30px 10px 0px;
+    font-size: 70px;
+    margin: -10px 30px 0px 0px;
+    /* border: white 2px solid; */
 }
 
 .display #operation{
-    margin: 10px 30px 10px 0px;
+    margin: 0px 30px 0px 0px;
+    font-size: 30px;
+    /* border: white 2px solid; */
 }
 
 .functionBtn{
